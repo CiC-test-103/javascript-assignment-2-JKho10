@@ -1,5 +1,6 @@
 // 🏦 Bank and Account System 
 // Bank Class: Manages multiple accounts
+
 class Bank {
     constructor() {
         this.accounts = []; // Stores all accounts in the bank
@@ -8,29 +9,97 @@ class Bank {
     // Add methods here:
     // Example: createAccount(name, initialDeposit)
 
+    createAccount(name, initialDeposit = 0){
+        const account = new Account(name, initialDeposit);
+        this.accounts.push(account);
+        return account;
+    }
 }
 
 // Account Class: Represents a single user's account
+
 class Account {
     constructor(name, balance = 0) {
         this.name = name; // Account holder's name
         this.balance = balance; // Initial balance (default is 0)
         this.transactionHistory = []; // Keeps a record of all transactions
+        if (balance > 0) {
+            this.transactionHistory.push({ transactionType: 'Deposit', amount: balance });
+        }
     }
 
     // Add methods here:
     // Example: deposit(amount) 
     // example data to be stored in transactionHistory { transactionType: 'Deposit', amount: 500 }
 
+    deposit(amount){
+        if(amount <=0){
+            console.log('Deposit amount must be greater than zero');
+            return;
+        }
+        this.balance += amount;
+        this.transactionHistory.push({
+            transactionType: 'Deposit', amount});
+    }
+
     // Example: withdraw(amount)
     // example data to be stored in transactionHistory { transactionType: 'Withdrawal', amount: 200 }
+
+    withdraw(amount) {
+        if (amount <= 0) {
+            console.log('Withdrawal amount must be greater than zero.');
+            return;
+        }
+        if (amount > this.balance) {
+            console.log('Insufficient funds.');
+            return;
+        }
+        this.balance -= amount;
+        this.transactionHistory.push({ transactionType: 'Withdrawal', amount });
+    }
 
     // Example: transfer(amount, recipientAccount)
     // example data to be stored in transactionHistory:
     // for account sending { transactionType: 'Transfer', amount: 300, to: recipientName }
     // for account recieving { transactionType: 'Received', amount: 300, from: senderName }
+
+    transfer(amount, recipientAccount) {
+        if (!(recipientAccount instanceof Account)) {
+            console.log('Recipient must be a valid account.');
+            return;
+        }
+        if (amount <= 0) {
+            console.log('Transfer amount must be greater than zero.');
+            return;
+        }
+        if (amount > this.balance) {
+            console.log('Insufficient funds for transfer.');
+            return;
+        }
+
+        this.balance -= amount;
+        recipientAccount.balance += amount;
+
+        // Record transaction for sender
+        this.transactionHistory.push({
+            transactionType: 'Transfer',
+            amount,
+            to: recipientAccount.name
+        });
+
+        // Record transaction for recipient
+        recipientAccount.transactionHistory.push({
+            transactionType: 'Received',
+            amount,
+            from: this.name
+        });
+    }
     
     // Example: checkBalance()
+
+    checkBalance() {
+        return this.balance;
+    }
 }
 
 //<-------------------------------DO NOT WRITE BELOW THIS LINE------------------------------>
