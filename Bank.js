@@ -30,7 +30,7 @@ class Account {
     // example data to be stored in transactionHistory { transactionType: 'Deposit', amount: 500 }
 
     deposit(amount){
-        if(amount <=0){
+        if(amount <= 0){
             console.log('Deposit amount must be greater than zero');
             return;
         }
