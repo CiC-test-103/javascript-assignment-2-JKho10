@@ -23,9 +23,6 @@ class Account {
         this.name = name; // Account holder's name
         this.balance = balance; // Initial balance (default is 0)
         this.transactionHistory = []; // Keeps a record of all transactions
-        if (balance > 0) {
-            this.transactionHistory.push({ transactionType: 'Deposit', amount: balance });
-        }
     }
 
     // Add methods here:
