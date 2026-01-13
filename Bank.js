@@ -9,8 +9,13 @@ class Bank {
     // Add methods here:
     // Example: createAccount(name, initialDeposit)
 
-    createAccount(name, initialDeposit = 0){
+    /*createAccount(name, initialDeposit = 0){
         const account = new Account(name, initialDeposit);
+        this.accounts.push(account);
+        return account;
+    }*/
+    createAccount(name, initialDeposit = 0){
+        const account = new Account(name, initialDeposit); 
         this.accounts.push(account);
         return account;
     }
